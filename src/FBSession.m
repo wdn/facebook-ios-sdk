@@ -833,13 +833,14 @@ static FBSession *g_activeSession = nil;
     BOOL tryFacebookLogin = (behavior == FBSessionLoginBehaviorUseSystemAccountIfPresent) ||
                             (behavior == FBSessionLoginBehaviorWithFallbackToWebView) ||
                             (behavior == FBSessionLoginBehaviorWithNoFallbackToWebView);
+	BOOL trySafariAuth = tryFacebookLogin && (behavior != FBSessionLoginBehaviorWithNoFallbackToWebView);
     BOOL tryFallback =  (behavior == FBSessionLoginBehaviorWithFallbackToWebView) ||
                         (behavior == FBSessionLoginBehaviorForcingWebView);
     
     [self authorizeWithPermissions:(NSArray*)permissions
                    defaultAudience:audience
                     integratedAuth:tryIntegratedAuth
-                         FBAppAuth:tryFacebookLogin
+                         FBAppAuth:trySafariAuth
                         safariAuth:tryFacebookLogin
                           fallback:tryFallback
                      isReauthorize:isReauthorize];
